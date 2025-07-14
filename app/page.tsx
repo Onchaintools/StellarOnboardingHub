@@ -160,7 +160,7 @@ export default function LandingPage() {
               <div className="space-y-4">
                 <div className="relative w-full">
                   <h1 className="text-5xl md:text-7xl font-bold text-[#333333] leading-tight font-sans text-center">
-                    Master Web3 & Stellar fast with us
+                    Stellar fast with us
                     <br />
                     <img src="/money-fast.avif" alt="Stellar Symbol" className="inline-block h-[500px] mx-auto mt-4" />
                   </h1> 

@@ -1,12 +1,13 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { useSorobanReact } from "stellar-react";
 import {
   Fingerprint,
   Mail,
@@ -39,6 +40,18 @@ export default function AuthPage() {
   const [seedPhrase, setSeedPhrase] = useState("")
   const [successMessage, setSuccessMessage] = useState("")
   const [errorMessage, setErrorMessage] = useState("")
+  const { address, connect, disconnect } = useSorobanReact();
+
+  useEffect(() => {
+    if (address) {
+      setSuccessMessage("🎉 Wallet connected successfully!")
+      setCurrentStep("success")
+      // Redirect after showing success message
+      setTimeout(() => {
+        window.location.href = "/dashboard"
+      }, 2000)
+    }
+  }, [address]);
 
   const handleInitialAuth = () => {
     if (isSignUp) {
@@ -336,8 +349,12 @@ export default function AuthPage() {
               <p className="text-gray-600">Do you already have a Stellar wallet?</p>
             </CardHeader>
             <CardContent className="space-y-4">
+             
+             {!address ? (
               <Button
-                onClick={() => handleWalletChoice("existing")}
+/*                 onClick={() => handleWalletChoice("existing")}
+ */        
+                onClick={connect}
                 variant="outline"
                 className="w-full p-8 sm:p-6 h-auto border-2 border-[#8E7CE5]/20 hover:border-[#8E7CE5] hover:bg-[#8E7CE5]/5 transition-all duration-300"
               >
@@ -349,6 +366,17 @@ export default function AuthPage() {
                   <ArrowRight className="hidden sm:inline-block w-8 h-8 sm:w-6 sm:h-6 text-[#8E7CE5] flex-shrink-0" />
                 </div>
               </Button>
+            ) : (
+              <div className="w-full p-8 sm:p-6 h-auto bg-green-100 rounded-lg border-2 border-green-500">
+                <div className="flex items-center justify-between w-full">
+                  <div className="text-left">
+                    <div className="font-semibold text-green-800 text-xl sm:text-lg">Wallet Connected!</div>
+                    <div className="text-base sm:text-sm text-green-600">Redirecting to dashboard...</div>
+                  </div>
+                  <CheckCircle className="w-8 h-8 sm:w-6 sm:h-6 text-green-600 flex-shrink-0" />
+                </div>
+              </div>
+            )}
 
               <Button
                 onClick={() => handleWalletChoice("new")}

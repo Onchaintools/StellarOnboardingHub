@@ -1,5 +1,16 @@
 ## Game Points Contract
 
+instruccions:
+unzip stellar-contracts.zip
+ In the main directory and run 
+```plaintext
+cargo build
+```
+go to contract/Gamepoints directory and run
+```plaintext
+cargo build
+```
+
 A Soroban smart contract for managing player points in gaming applications on the Stellar blockchain. This contract implements an ownable pattern where only the contract owner can award points to players, while providing public functions for querying player information and rankings.
 
 ## Features
